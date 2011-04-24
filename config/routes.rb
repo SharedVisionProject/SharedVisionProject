@@ -1,4 +1,8 @@
 Sharedvison::Application.routes.draw do
+  resources :pieces
+
+  resources :boards
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
