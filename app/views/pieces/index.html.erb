@@ -1,0 +1,31 @@
+<h1>Listing pieces</h1>
+
+<table>
+  <tr>
+    <th>Board</th>
+    <th>Pos x</th>
+    <th>Pos y</th>
+    <th>Type of shape</th>
+    <th>Data</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @pieces.each do |piece| %>
+  <tr>
+    <td><%= piece.board_id %></td>
+    <td><%= piece.pos_x %></td>
+    <td><%= piece.pos_y %></td>
+    <td><%= piece.type_of_shape %></td>
+    <td><%= piece.data %></td>
+    <td><%= link_to 'Show', piece %></td>
+    <td><%= link_to 'Edit', edit_piece_path(piece) %></td>
+    <td><%= link_to 'Destroy', piece, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Piece', new_piece_path %>

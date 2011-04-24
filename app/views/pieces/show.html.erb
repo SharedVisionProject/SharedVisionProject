@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Board:</b>
+  <%= @piece.board_id %>
+</p>
+
+<p>
+  <b>Pos x:</b>
+  <%= @piece.pos_x %>
+</p>
+
+<p>
+  <b>Pos y:</b>
+  <%= @piece.pos_y %>
+</p>
+
+<p>
+  <b>Type of shape:</b>
+  <%= @piece.type_of_shape %>
+</p>
+
+<p>
+  <b>Data:</b>
+  <%= @piece.data %>
+</p>
+
+
+<%= link_to 'Edit', edit_piece_path(@piece) %> |
+<%= link_to 'Back', pieces_path %>
