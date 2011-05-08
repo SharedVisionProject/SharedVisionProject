@@ -1,19 +1,7 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Name:</b>
-  <%= @board.name %>
-</p>
-
-<p>
-  <b>Height:</b>
-  <%= @board.height %>
-</p>
-
-<p>
-  <b>Width:</b>
-  <%= @board.width %>
-</p>
+<canvas id="boardCanvas" width="<%= @board.width %>" height="<%= @board.height %>" >
+</canvas>
 
 
 <%= link_to 'Edit', edit_board_path(@board) %> |
