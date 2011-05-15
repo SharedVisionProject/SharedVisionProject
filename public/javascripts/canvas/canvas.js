@@ -45,7 +45,7 @@ function drawLinePiece(p,canv){
 /* change line width*/
         ctx.lineWidth = detail.width;
 /* change line color*/
-        ctx.strokeStyle = "rgb(" + detail.red + "," detail.green + "," detail.blue + ")";
+        ctx.strokeStyle = detail.color;
 	ctx.closePath();
 
 	ctx.stroke();
