@@ -2,7 +2,12 @@ class PiecesController < ApplicationController
   # GET /pieces
   # GET /pieces.xml
   def index
-    @pieces = Piece.all
+		
+    @pieces = if params[:board_id].nil? then
+								Piece.all
+							else
+								Piece.where(:board_id => params[:board_id])
+							end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -16,7 +21,7 @@ class PiecesController < ApplicationController
   def show
     @piece = Piece.find(params[:id])
 
-    respond_to do |format|
+	   respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @piece }
 			format.json { render :json => @piece }

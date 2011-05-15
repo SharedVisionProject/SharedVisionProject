@@ -1,8 +1,11 @@
 Sharedvison::Application.routes.draw do
-  resources :pieces
 
-  resources :boards
+  resources :boards do
+	  resources :pieces
+	end
 	
+	resources :pieces
+
 	root :to => "Boards#index"
 
   # The priority is based upon order of creation:

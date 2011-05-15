@@ -5,13 +5,17 @@ $(document).ready(drawAllPieces());
 
 function drawAllPieces(){
 
-	$.getJSON("/pieces",null,function(data,status){
+	$.getJSON(getPiecesUrl(),null,function(data,status){
 		$.each(data,function(index,item){
 			drawPiece(item.piece);
 		})
 	})
 }
 
+function getPiecesUrl(){
+	var url = document.URL
+	return url + (url.charAt(url.length-1) === '/'?'':'/') + "pieces"
+}
 
 /*-- Drawing --*/
 
