@@ -42,7 +42,9 @@ function drawLinePiece(p,canv){
 	ctx.beginPath();
 	ctx.moveTo(p.pos_x,p.pos_y);
 	ctx.lineTo(detail.end_x,detail.end_y);
+/* change line width*/
         ctx.lineWidth = detail.width;
+/* change line color*/
         ctx.strokeStyle = "rgb(" + detail.red + "," detail.green + "," detail.blue + ")";
 	ctx.closePath();
 
