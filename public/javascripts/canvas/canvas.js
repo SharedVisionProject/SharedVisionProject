@@ -30,6 +30,9 @@ function drawPiece(piece){
 		case "text":
 			drawTextPiece(piece,getActiveCanvas());
 			break;
+		case "freehand":
+			drawFreehandPiece(piece,getActiveCanvas());
+			break;
 		default:
 			break;
 	}
@@ -55,15 +58,45 @@ function drawTextPiece(p,canv){
 	var ctx = canv.getContext('2d');
 	var detail = eval("("+p.data+")");
 
+	ctx.font = detail.font;
+	ctx.fillStyle  = detail.color;
 	if( detail.shadow != null)
 	{
-		ctx.shadowColor = detail.shadow.color;
-		ctx.shadowBlur = detail.shadow.blur;
 		ctx.shadowOffsetX = detail.shadow.offset_X;
 		ctx.shadowOffsetY = detail.shadow.offset_Y;
+		ctx.shadowColor = detail.shadow.color!=null? detail.shadow.color:"#000000";
+		ctx.shadowBlur = detail.shadow.blur;
 	}
 
-	ctx.fillStyle  = detail.color;
-	ctx.font = detail.font;
-	ctx.fillText(detail.strings, p.pos_x, p.pos_y, null);
+	ctx.fillText(detail.strings!=null? detail.strings:"", p.pos_x, p.pos_y, detail.width);
 }
+
+function drawFreehandPiece(p,canv){
+	var ctx = canv.getContext('2d');
+	var detail = eval("("+p.data+")");
+	var pre_x = p.pos_x;
+	var pre_y = p.pos_y;
+
+	ctx.lineCap = "round";
+	ctx.lineJoin = "round";
+	ctx.strokeStyle = detail.color;
+	ctx.lineWidth = detail.width;
+	if( detail.shadow != null)
+	{
+		ctx.shadowOffsetX = detail.shadow.offset_X;
+		ctx.shadowOffsetY = detail.shadow.offset_Y;
+		ctx.shadowColor = detail.shadow.color!=null? detail.shadow.color:"#000000";
+		ctx.shadowBlur = detail.shadow.blur;
+	}
+
+	for (var i=0; i<detail.points.length; i++) {
+		ctx.beginPath();
+		ctx.moveTo(pre_x, pre_y);
+		ctx.quadraticCurveTo( (pre_x+detail.points[i].x)/2, (pre_y+detail.points[i].y)/2, detail.points[i].x, detail.points[i].y);
+		ctx.closePath();
+		ctx.stroke();
+		pre_x= detail.points[i].x;
+		pre_y= detail.points[i].y;
+	}
+}
+

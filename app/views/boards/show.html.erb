@@ -1,10 +1,30 @@
 <%= javascript_include_tag "canvas/canvas.js" %>
+<%= javascript_include_tag "canvas/pentool.js" %>
+<%= javascript_include_tag "canvas/mouselistener.js" %>
 
 <p id="notice"><%= notice %></p>
+
+<form name="TypeOfShape">
+	<input type="radio" name="type_of_shape" onclick="checkTypeofShape('line')" checked >line</input>
+	<input type="radio" name="type_of_shape" onclick="checkTypeofShape('freehand')">freehand</input>
+	<input type="radio" name="type_of_shape" onclick="checkTypeofShape('text')">text</input>
+</form>
+<form name="commonProperties" action="http://deep-cloud-787.heroku.com/pieces" method="post">
+	<input name="board" type="hidden" value="<%= @board.id %>">
+	<input name="pos_x" type="hidden" value="pos_x">
+	<input name="pos_y" type="hidden" value="pos_y">
+	<input name="typeofshape" type="hidden" value="typeofshape">
+	<input name="data" type="text" value="data" size="100">
+</form>
+<form name="ShapeProperties" >
+</form>
 
 <canvas id="boardCanvas" width="<%= @board.width %>" height="<%= @board.height %>" >
 </canvas>
 
-
+<br />
 <%= link_to 'Edit', edit_board_path(@board) %> |
 <%= link_to 'Back', boards_path %>
+<br />
+<%= link_to 'New Piece', new_piece_path %>
+<div id="clicked">testMsg</div>
