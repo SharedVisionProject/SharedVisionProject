@@ -36,53 +36,59 @@ var isMouseDown=false;
 var isMouseOut=false;
 var point_x_old=0;
 var point_y_old=0;
-var radius;
+//丸の描写で使ってる変数（座標の変数はそのうち統一した方が良いと思う）
+var mouseX;//現時点のX座標
+var mouseY;//現時点のY座標
+var radius;//半径
+
 //circle
 function startCircle(event){
-	isMouseDown = true;
-	//座標調整
-	adjustXY(e);
+	var canv = document.getElementById("boardCanvas");
+	var ctx = canv.getContext('2d');
+	var canvasRect = event.target.getBoundingClientRect();
+	//マウスダウン時の座標を初期化
+	adjustXY(event);//座標の初期化
 	//円を描く
 	ctx.beginPath();
-	ctx.fillStyle = "#CC00C0";
-	ctx.arc(document.commonProperties.pos_x.value, document.commonProperties.pos_y.value, 5, 0, Math.PI * 2, false);
+	ctx.fillStyle = "#FF0000";
+	ctx.arc(mouseX, mouseY, 5, 0, Math.PI * 2, false);
 	ctx.fill();
-	//座標の保存
-	point_x_old = document.commonProperties.pos_x.value;
-	point_y_old = document.commonProperties.pos_y.value;
+	//マウスダウン時の座標の保存
+	point_x_old = mouseX;
+	point_y_old = mouseY;
 }
 
 function endCircle(event){
-	isMouseDown = false;
-	//座標調整
-	adjustXY(e);
+	var canv = document.getElementById("boardCanvas");
+	var ctx = canv.getContext('2d');
+	var canvasRect = event.target.getBoundingClientRect();
+
+	adjustXY(event);//座標の初期化
 	//円を描く
 	ctx.beginPath();
-	ctx.fillStyle = "#00AACC";
-	radius = Math.sqrt((document.commonProperties.pos_x.value - point_x_old) * (document.commonProperties.pos_x.value - point_x_old) + (document.commonProperties.pos_y.value - point_y_old) * (document.commonProperties.pos_y.value - point_y_old)),	
+	ctx.fillStyle = "#AA00CC";
+	radius = Math.sqrt((mouseX - point_x_old) * (mouseX - point_x_old) + (mouseY - point_y_old) * (mouseY - point_y_old));
 	ctx.arc(point_x_old, point_y_old, radius, 0, Math.PI * 2, false);
 	ctx.fill();
 }
 
 function drawCircle(event){
-	if(flag){
-		ctx.beginPath();
-		ctx.strokeStyle = "#FFcc00";
-		radius = Math.sqrt((document.commonProperties.pos_x.value - point_x_old) * (document.commonProperties.pos_x.value - point_x_old) + (document.commonProperties.pos_y.value - point_y_old) * (document.commonProperties.pos_y.value - point_y_old)),	
-		ctx.arc(point_x_old, point_y_old, radius, 0, Math.PI * 2, false);
-		ctx.stroke();
-		}
 }
 
-function dragOutCircle(event){
-	
+
+function dragOutCircle(event){	
 }
 
-function adjustXY(){
-		var rect = e.target.getBoundingClientRect();
-		mouseX = e.clientX - rect.left;
-		mouseY = e.clientY - rect.top;
+//座標の初期化
+function adjustXY(event) {
+	var canv = document.getElementById("boardCanvas");
+	var ctx = canv.getContext('2d');
+	var canvasRect = event.target.getBoundingClientRect();
+	var rect = event.target.getBoundingClientRect();
+	mouseX = event.clientX - rect.left;
+	mouseY = event.clientY - rect.top;
 }
+
 
 //line
 function startDrawLine(event)

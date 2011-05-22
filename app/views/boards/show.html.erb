@@ -8,6 +8,7 @@
 	<input type="radio" name="type_of_shape" onclick="checkTypeofShape('line')" checked >line</input>
 	<input type="radio" name="type_of_shape" onclick="checkTypeofShape('freehand')">freehand</input>
 	<input type="radio" name="type_of_shape" onclick="checkTypeofShape('text')">text</input>
+	<input type="radio" name="type_of_shape" onclick="checkTypeofShape('circle')">circle</input>
 </form>
 <form name="commonProperties" action="http://deep-cloud-787.heroku.com/pieces" method="post">
 	<input name="board" type="hidden" value="<%= @board.id %>">
