@@ -21,6 +21,12 @@ function setMouseEvent(typeofshape)
 		document.getElementById("boardCanvas").onmousemove= drawFreehand;
 		document.getElementById("boardCanvas").onmouseout= dragOutFreehand;
 		break;
+	case "circle":
+		document.getElementById("boardCanvas").onmousedown = startCircle;
+		document.getElementById("boardCanvas").onmouseup = endCircle;
+		document.getElementById("boardCanvas").onmousemove= drawCircle;
+		document.getElementById("boardCanvas").onmouseout= dragOutCircle;
+		break;
 	default:
 		break;
 	}
@@ -30,6 +36,53 @@ var isMouseDown=false;
 var isMouseOut=false;
 var point_x_old=0;
 var point_y_old=0;
+var radius;
+//circle
+function startCircle(event){
+	isMouseDown = true;
+	//座標調整
+	adjustXY(e);
+	//円を描く
+	ctx.beginPath();
+	ctx.fillStyle = "#CC00C0";
+	ctx.arc(document.commonProperties.pos_x.value, document.commonProperties.pos_y.value, 5, 0, Math.PI * 2, false);
+	ctx.fill();
+	//座標の保存
+	point_x_old = document.commonProperties.pos_x.value;
+	point_y_old = document.commonProperties.pos_y.value;
+}
+
+function endCircle(event){
+	isMouseDown = false;
+	//座標調整
+	adjustXY(e);
+	//円を描く
+	ctx.beginPath();
+	ctx.fillStyle = "#00AACC";
+	radius = Math.sqrt((document.commonProperties.pos_x.value - point_x_old) * (document.commonProperties.pos_x.value - point_x_old) + (document.commonProperties.pos_y.value - point_y_old) * (document.commonProperties.pos_y.value - point_y_old)),	
+	ctx.arc(point_x_old, point_y_old, radius, 0, Math.PI * 2, false);
+	ctx.fill();
+}
+
+function drawCircle(event){
+	if(flag){
+		ctx.beginPath();
+		ctx.strokeStyle = "#FFcc00";
+		radius = Math.sqrt((document.commonProperties.pos_x.value - point_x_old) * (document.commonProperties.pos_x.value - point_x_old) + (document.commonProperties.pos_y.value - point_y_old) * (document.commonProperties.pos_y.value - point_y_old)),	
+		ctx.arc(point_x_old, point_y_old, radius, 0, Math.PI * 2, false);
+		ctx.stroke();
+		}
+}
+
+function dragOutCircle(event){
+	
+}
+
+function adjustXY(){
+		var rect = e.target.getBoundingClientRect();
+		mouseX = e.clientX - rect.left;
+		mouseY = e.clientY - rect.top;
+}
 
 //line
 function startDrawLine(event)
@@ -41,6 +94,7 @@ function startDrawLine(event)
 	i_posx.value= event.clientX - canvasRect.left;
 	i_posy.value= event.clientY - canvasRect.top;
 }
+
 function endDrawLine(event)
 {
 	isMouseDown=false;
@@ -57,8 +111,8 @@ function endDrawLine(event)
 	ctx.beginPath();
 	ctx.moveTo( document.commonProperties.pos_x.value, document.commonProperties.pos_y.value);
 	ctx.lineTo(x, y);
-    ctx.lineWidth = i_width.value;
-    ctx.strokeStyle = i_color.value;
+       ctx.lineWidth = i_width.value;
+       ctx.strokeStyle = i_color.value;
 	ctx.closePath();
 	ctx.stroke();
 
