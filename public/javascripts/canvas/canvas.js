@@ -107,14 +107,11 @@ function drawFreehandPiece(p,canv){
 function drawCirclePiece(p,canv){
 	var ctx = canv.getContext('2d');
 	var detail = eval("("+p.data+")");
-	var pre_x = pos_x;
-	var pre_y = pos_y;
+
 	//円の描写
 	ctx.beginPath();
 	ctx.strokeStyle = "#FFcc00";
-	ctx.arc(posX, posY, detail.radius, 0, Math.PI * 2, false);
+	ctx.arc(p.pos_x, p.pos_y, detail.radius, 0, Math.PI * 2, false);
 	ctx.stroke();
 }
-
-
 
